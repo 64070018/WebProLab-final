@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/css/all.css" rel="stylesheet" />
+  <link href="/css/bulma.css" rel="stylesheet" />
+  <script src="/js/all.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm.vue@2.6.14/dist/vue.js"></script>
+  <title>My Blogs</title>
+</head>
+
+<body class="has-background-light">
+  <div class="container is-widescreen">
+    <section class="hero">
+      <div class="hero-body">
+        <p class="title">My Stories</p>
+      </div>
+    </section>
+    <section class="section" id="app">
+      <div class="content">
+        <div class="columns is-multiline">
+          <% for (let blog of blogs) { %>
+            <div class="column is-3">
+              <div class="card">
+                <div class="card-image pt-5">
+                  <figure class="image">
+                    <img
+                      src="<%= blog.file_path ? blog.file_path : 'https://bulma.io/images/placeholders/640x360.png' %>"
+                      alt="Placeholder image">
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <div class="title">
+                    <%= blog.title %>
+                  </div>
+                  <div class="content">
+                    <% if (blog.content.length > 200) { %>
+                      <%= blog.content.substring(0, 197) + "..." %>
+                        <% } else { %>
+                          <%= blog.content %>
+                            <% } %>
+                  </div>
+
+                </div>
+
+                <footer class="card-footer">
+                  <a class="card-footer-item" href="<%= `/detail/${blog.id}/` %>">Read more...</a>
+                  <a class="card-footer-item">
+                    <form method="POST" action="<%= `/blogs/addlike/${blog.id}` %>" id="form<%= blog.id %>">
+                      <span class="icon-text" onclick="document.getElementById('form<%= blog.id %>').submit();">
+                        <span class="icon">
+                          <i class="far fa-heart"></i>
+                        </span>
+                        <span>Like (<%= blog.like %>)</span> <!-- ปรับเพิ่มให่้แสดงจำนวน like ในวงเล็บ -->
+                      </span>
+                    </form>
+                  </a>
+                </footer>
+
+
+                <!-- <footer class="card-footer">
+                  <a class="card-footer-item" href="<%= `/detail/${blog.id}/` %>">Read more...</a>
+                  <a class="card-footer-item">
+                    <form method= "POST" action="<%= `/blogs/addlike/${blog.id}` %>" id="form<%= blog.id %>">
+                      <span class="icon-text" onclick="document.getElementById('form<%= blog.id %>').submit();">
+                        <span class="icon">
+                          <i class="far fa-heart"></i>
+                        </span>
+                        <span>Like (<%= blog.like %>)</span>
+                      </span>
+                    </form>
+                  </a>
+                </footer> -->
+              </div>
+            </div>
+            <% } %>
+
+              <!-- </div>
+              <footer class="card-footer">
+                <a class="card-footer-item" :href="'/detail/' + blog.id">Read more...</a>
+                <a class="card-footer-item" :href="'/blogs/addlike/' + blog.id" method="put">
+                  <form method="POST" action="<%= `/blogs/addlike/${blogs.id}` %>" id="form<%- blogs.id %>">
+                    <span class="icon-text" onclick="document.getElementById('form<%- blogs.id %>').submit();">
+                      <span class="icon">
+                        <i class="far fa-heart"></i>
+                      </span>
+                      <span>Like( {{ blog.like }} )</span>
+                    </span>
+                  </form>
+                </a>
+              </footer> -->
+
+    </section>
+  </div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        blogs: JSON.parse(`<%- blogs %>`)
+      },
+      computed: {
+        computedBlogs() {
+          let results = this.blogs
+          return results.map(b => {
+            if (b.content.length > 200) {
+              b.content = b.content.substring(0, 200) + '...'
+            }
+            return b
+          })
+        }
+      }
+    })
+  </script> -->
+</body>
+
+</html>
