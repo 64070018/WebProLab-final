@@ -108,6 +108,7 @@ const check_date = Joi.object({
         then: Joi.date().min(Joi.ref('start_date')).required()
     })
 })
+// valid("รับได้แค่", "ที่กำหนดไว้")
 
 
 app.get('/todo', async (req, res) => {
@@ -118,6 +119,12 @@ app.get('/todo', async (req, res) => {
     } catch (err) {
         console.log(err)
         return res.status(400).json(err)
+        
+//         วิธีมะปราง
+        if(result.error && title == ""){
+            return res.status(400).send({message: "ต้องกรอก titile"})
+        }
+//         
     }
 
     const start_date = req.query.start_date
