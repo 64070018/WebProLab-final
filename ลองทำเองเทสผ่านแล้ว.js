@@ -39,7 +39,7 @@ app.use(express.urlencoded({ extended: false }));
 
 
 // const check_date = Joi.object({
-//     start_date: Joi.date().iso().required(),
+//     start_date: Joi.date().iso().required().label("ต้องกรอก star_date"),
 //     end_date: Joi.date().iso().required().when('start_date', {
 //         is: Joi.date().required(),
 //         then: Joi.date().min(Joi.ref('start_date')).required()
@@ -129,7 +129,7 @@ app.delete('/todo/:id', async (req, res) => {
 
 // then เมื่อ start daate เป็น date ทำต่อจาก is
 const check_date = Joi.object({
-    start_date: Joi.date().iso().required(),
+    start_date: Joi.date().iso().required().label('ต้องกรอก titile'),
     end_date: Joi.date().iso().required().when('start_date', {
         is: Joi.date().required(),
         then: Joi.date().min(Joi.ref('start_date')).required()
