@@ -55,6 +55,8 @@ app.post('/todo', async (req, res) => {
         await check_require.validateAsync(req.body, { abortEarly: false })
     } catch (err) {
         console.log(err)
+        return res.status(400).send({message: err.details[0].context.label})
+        
         if (!req.body.title) {
             return res.status(400).send({
                 "message": "ต้องกรอก title"
